@@ -58,14 +58,6 @@ public class OsrsMapAutotypePlugin extends Plugin
 
 			log.debug("World map opened; activating search");
 
-			/*
-			 * This reproduces the client script fired when the user
-			 * manually activates the World Map search widget.
-			 *
-			 * Captured vanilla event:
-			 * script 1736
-			 * args: SEARCH_WIDGET_ID, 0, 1
-			 */
 			client.runScript(
 					WORLDMAP_SEARCH_ACTIVATE_SCRIPT,
 					InterfaceID.Worldmap.SEARCH,

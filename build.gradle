@@ -17,14 +17,14 @@ def runeLiteVersion = 'latest.release'
 def pluginMainClass = 'com.osrsmapautotype.OsrsMapAutotypePluginTest'
 
 dependencies {
-	compileOnly group: 'net.runelite', name:'client', version: runeLiteVersion
+	compileOnly group: 'net.runelite', name: 'client', version: runeLiteVersion
 
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
 	testImplementation 'junit:junit:4.12'
-	testImplementation group: 'net.runelite', name:'client', version: runeLiteVersion
-	testImplementation group: 'net.runelite', name:'jshell', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name: 'client', version: runeLiteVersion
+	testImplementation group: 'net.runelite', name: 'jshell', version: runeLiteVersion
 }
 
 group = 'com.osrsmapautotype'
@@ -37,20 +37,25 @@ tasks.withType(JavaCompile).configureEach {
 tasks.register('run', JavaExec) {
 	classpath = sourceSets.test.runtimeClasspath
 	mainClass = pluginMainClass
-
 	jvmArgs "-ea"
 	args "--developer-mode", "--debug"
 }
 
 tasks.register('shadowJar', Jar) {
 	dependsOn configurations.testRuntimeClasspath
+
 	manifest {
-		attributes('Main-Class': pluginMainClass, 'Multi-Release': true)
+		attributes(
+				'Main-Class': pluginMainClass,
+				'Multi-Release': true
+		)
 	}
 
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
 	from sourceSets.main.output
 	from sourceSets.test.output
+
 	from {
 		configurations.testRuntimeClasspath.collect { file ->
 			file.isDirectory() ? file : zipTree(file)
